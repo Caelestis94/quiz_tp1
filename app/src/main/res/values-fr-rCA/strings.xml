@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quiz</string>
+    <string name="txtview_pseudo">Entrez votre pseudo :</string>
+    <string name="hint_pseudo">Pseudo</string>
+    <string name="btn_start">Commencer</string>
+    <string name="background_image">Background image</string>
+    <string name="pseudo_vide_erreur">Veuillez entrer un pseudo</string>
+    <string name="settings">Paramètres</string>
+
+</resources>
