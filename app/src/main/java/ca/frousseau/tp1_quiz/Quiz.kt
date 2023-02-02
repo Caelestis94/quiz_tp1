@@ -20,6 +20,7 @@ class Quiz : AppCompatActivity() {
     lateinit var choix_quatre : RadioButton
     lateinit var btn_next : Button
     lateinit var grp_reponses : RadioGroup
+    lateinit var img_question : ImageView
 
 
 
@@ -40,6 +41,7 @@ class Quiz : AppCompatActivity() {
         grp_reponses = findViewById(R.id.reponses)
         btn_next.text = "Valider"
         progress_quiz.setProgress(progress_inc, true)
+        img_question = findViewById(R.id.img_question)
 
         if(savedInstanceState == null){
             afficherQuestion(questions[nb_questions - 1])
@@ -150,14 +152,15 @@ class Quiz : AppCompatActivity() {
         choix_deux.text = question.choix[1]
         choix_trois.text = question.choix[2]
         choix_quatre.text = question.choix[3]
+        img_question.setImageResource(question.img)
     }
 
     private fun creerQuestions(): Array<Question> {
-        var q1 = Question("Quelle est la capitale du Canada?", "Ottawa", arrayOf("Ottawa", "Toronto", "Montreal", "Québec"))
-        var q2 = Question("Quelle est la capitale de la France?", "Paris", arrayOf("Paris", "Lyon", "Marseille", "Bordeaux"))
-        var q3 = Question("Quelle est la capitale de l'Allemagne?", "Berlin", arrayOf("Berlin", "Hambourg", "Munich", "Cologne"))
-        var q4 = Question("Quelle est la capitale de l'Espagne?", "Madrid", arrayOf("Madrid", "Barcelone", "Valence", "Séville"))
-        var q5 = Question("Quelle est la capitale de l'Italie?", "Rome", arrayOf("Rome", "Milan", "Venise", "Turin"))
+        var q1 = Question("Quelle est la capitale du Canada?", "Ottawa", arrayOf("Ottawa", "Toronto", "Montreal", "Québec"), img = R.drawable.flag_can)
+        var q2 = Question("Quelle est la capitale de la France?", "Paris", arrayOf("Paris", "Lyon", "Marseille", "Bordeaux"), img = R.drawable.flag_france)
+        var q3 = Question("Quelle est la capitale de l'Allemagne?", "Berlin", arrayOf("Berlin", "Hambourg", "Munich", "Cologne"), img = R.drawable.flag_ger)
+        var q4 = Question("Quelle est la capitale de l'Espagne?", "Madrid", arrayOf("Madrid", "Barcelone", "Valence", "Séville"), img = R.drawable.flag_spain)
+        var q5 = Question("Quelle est la capitale de l'Italie?", "Rome", arrayOf("Rome", "Milan", "Venise", "Turin"), img = R.drawable.flag_italy)
 
         var questions = arrayOf(q1, q2, q3, q4, q5)
         return questions
