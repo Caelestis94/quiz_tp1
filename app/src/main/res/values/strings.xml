@@ -6,6 +6,19 @@
     <string name="background_image">Background image</string>
     <string name="pseudo_vide_erreur">Please enter a username</string>
     <string name="settings">Settings</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_validate">Validate</string>
+    <string name="btn_finish">Finish</string>
+    <string name="btn_restart">Restart</string>
+    <string name="btn_share">Share</string>
+    <string name="btn_setting">Accept</string>
+    <string name="textview_pseudo_settings">Change your username</string>
+    <string name="pseudo_modifie">Your username has been changed</string>
+    <string name="resultat_pseudo">Hi </string>
+    <string name="resultat_score">This is how many right answers you got :  </string>
+    <string name="resultat_score_percent">Your final score is </string>
+    <string name="resultat_score_share">Hi! Try this quiz my best score is </string>
+
 
 
 </resources>

@@ -3,6 +3,7 @@ package ca.frousseau.tp1_quiz
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -24,12 +25,16 @@ class Authentification : AppCompatActivity(), View.OnClickListener {
         btn_start.setOnClickListener(this)
     }
 
+
     override fun onClick(v: View?) {
         if (v != null) {
             if (v.id == R.id.btn_start) {
                 if (txt_pseudo.text.toString().isNotEmpty()) {
                     val intent = Intent(this, Quiz::class.java)
-                    intent.putExtra("pseudo", txt_pseudo.text.toString())
+                    val pref = PreferenceManager.getDefaultSharedPreferences(this)
+                    val editor = pref.edit()
+                    editor.putString("pseudo", txt_pseudo.text.toString())
+                    editor.apply()
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, getString(R.string.pseudo_vide_erreur), Toast.LENGTH_SHORT).show()

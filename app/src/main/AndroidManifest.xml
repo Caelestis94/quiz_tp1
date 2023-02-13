@@ -10,17 +10,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
-
         tools:targetApi="31">
         <activity
-            android:name=".Quiz"
+            android:name=".Resultat"
+            android:exported="false" />
+        <activity
+            android:name=".Configuration"
             android:exported="false"
-            android:parentActivityName=".Authentification"
-          />
+            android:parentActivityName=".Quiz" />
+        <activity
+            android:name=".Quiz"
+            android:exported="false" />
         <activity
             android:name=".Authentification"
-            android:exported="true"
-           >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

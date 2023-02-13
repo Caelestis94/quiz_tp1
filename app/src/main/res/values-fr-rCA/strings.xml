@@ -7,5 +7,20 @@
     <string name="background_image">Background image</string>
     <string name="pseudo_vide_erreur">Veuillez entrer un pseudo</string>
     <string name="settings">Paramètres</string>
+    <string name="btn_next">Suivant</string>
+    <string name="btn_validate">Valider</string>
+    <string name="btn_finish">Terminer</string>
+    <string name="btn_restart">Rejouer</string>
+    <string name="btn_share">Partager</string>
+    <string name="btn_setting">Accepter</string>
+    <string name="textview_pseudo_settings">Changer votre pseudo</string>
+    <string name="pseudo_modifie">Votre pseudo à été changé</string>
+    <string name="resultat_pseudo">Salut </string>
+    <string name="resultat_score">Voici combien de bonnes réponses tu as : </string>
+    <string name="resultat_score_percent">Ton score finale est </string>
+    <string name="resultat_score_share">Salut! Essaye le quiz mon résultat est de </string>
+
+
+
 
 </resources>

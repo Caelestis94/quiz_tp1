@@ -1,5 +1,8 @@
 package ca.frousseau.tp1_quiz
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -12,6 +15,9 @@ class Quiz : AppCompatActivity() {
     var questions = creerQuestions()
     var progress_inc = 100 / questions.size
     var nb_questions = questions.size
+    var pseuso = ""
+
+
     lateinit var progress_quiz : ProgressBar
     lateinit var txt_question : TextView
     lateinit var choix_un : RadioButton
@@ -21,6 +27,7 @@ class Quiz : AppCompatActivity() {
     lateinit var btn_next : Button
     lateinit var grp_reponses : RadioGroup
     lateinit var img_question : ImageView
+    lateinit var txt_nbQuestions : TextView
 
 
 
@@ -29,8 +36,7 @@ class Quiz : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
         setSupportActionBar(findViewById(R.id.toolbar))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        pseuso = intent.getStringExtra("pseudo").toString()
         progress_quiz = findViewById(R.id.progress_quiz)
         txt_question = findViewById(R.id.txt_question)
         choix_un = findViewById(R.id.rdb_choix_un)
@@ -39,9 +45,10 @@ class Quiz : AppCompatActivity() {
         choix_quatre = findViewById(R.id.rdb_choix_quatre)
         btn_next = findViewById(R.id.btn_next)
         grp_reponses = findViewById(R.id.reponses)
-        btn_next.text = "Valider"
+        btn_next.setText(R.string.btn_validate)
         progress_quiz.setProgress(progress_inc, true)
         img_question = findViewById(R.id.img_question)
+        txt_nbQuestions = findViewById(R.id.txtNbQuestions)
 
         if(savedInstanceState == null){
             afficherQuestion(questions[nb_questions - 1])
@@ -50,15 +57,28 @@ class Quiz : AppCompatActivity() {
             nb_questions = savedInstanceState.getInt("nb_questions")
             progress_quiz.setProgress(savedInstanceState.getInt("progress"), true)
             Toast.makeText(this, "$nb_questions", Toast.LENGTH_SHORT).show()
-            afficherQuestion(questions[nb_questions - 1])
+            if(nb_questions > 0){
+                afficherQuestion(questions[nb_questions - 1])
+            } else {
+                afficherQuestion(questions[0])
+                //disable radio buttons
+                for (i in 0 until grp_reponses.childCount) {
+                    (grp_reponses.getChildAt(i) as RadioButton).isEnabled = false
+                }
+                Toast.makeText(this, "Fin du quiz", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
         btn_next.setOnClickListener {
 
-            if(btn_next.text == "Valider"){
+            if(btn_next.text == getText(R.string.btn_validate)){
                 verifierQuestion(questions[nb_questions - 1])
-                btn_next.text = "Suivant"
+                if( nb_questions == 1){
+                    btn_next.setText(R.string.btn_finish)
+                } else {
+                    btn_next.setText(R.string.btn_next)
+                }
 
             } else {
                 nb_questions--
@@ -71,10 +91,14 @@ class Quiz : AppCompatActivity() {
                     }
 
                     afficherQuestion(questions[nb_questions - 1])
-                    btn_next.text = "Valider"
+                    btn_next.setText(R.string.btn_validate)
                 } else {
 
-                    Toast.makeText(this, "Fin du quiz", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, Resultat::class.java)
+                    intent.putExtra("score", score)
+                    intent.putExtra("nb_questions", questions.size)
+                    startActivity(intent)
+
                 }
             }
         }
@@ -82,7 +106,6 @@ class Quiz : AppCompatActivity() {
 
 
     }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("score", score)
@@ -105,19 +128,45 @@ class Quiz : AppCompatActivity() {
         return true
     }
 
+
+
     override fun onOptionsItemSelected(item: MenuItem) : Boolean{
         return when (item.itemId){
             R.id.settings -> {
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, Configuration::class.java)
+                startActivity(intent)
                 true
             }
 
             else -> super.onOptionsItemSelected(item)
+
         }
     }
 
+//    override fun onStop() {
+//        super.onStop()
+//        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+//        with (sharedPref.edit()) {
+//            putInt("score", score)
+//            putInt("nb_questions", nb_questions)
+//            putInt("progress_inc", progress_inc)
+//            putString("pseudo", pseuso)
+//            commit()
+//        }
+//    }
 
-    fun verifierQuestion(question: Question){
+//    override fun onResume() {
+//        super.onResume()
+//        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+//        pseuso = sharedPref.getString("pseudo", "")!!
+//    }
+
+
+
+
+
+    private fun verifierQuestion(question: Question){
         val bonneReponse = grp_reponses.getChildAt(question.choix.indexOf(question.reponse)) as RadioButton
 
         if(grp_reponses.checkedRadioButtonId == -1){
@@ -145,6 +194,7 @@ class Quiz : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun afficherQuestion(question: Question){
         txt_question.text = question.question
         question.choix.shuffle()
@@ -153,17 +203,42 @@ class Quiz : AppCompatActivity() {
         choix_trois.text = question.choix[2]
         choix_quatre.text = question.choix[3]
         img_question.setImageResource(question.img)
+        txt_nbQuestions .text = "${questions.size - nb_questions + 1}/${questions.size}"
     }
 
     private fun creerQuestions(): Array<Question> {
-        var q1 = Question("Quelle est la capitale du Canada?", "Ottawa", arrayOf("Ottawa", "Toronto", "Montreal", "Québec"), img = R.drawable.flag_can)
-        var q2 = Question("Quelle est la capitale de la France?", "Paris", arrayOf("Paris", "Lyon", "Marseille", "Bordeaux"), img = R.drawable.flag_france)
-        var q3 = Question("Quelle est la capitale de l'Allemagne?", "Berlin", arrayOf("Berlin", "Hambourg", "Munich", "Cologne"), img = R.drawable.flag_ger)
-        var q4 = Question("Quelle est la capitale de l'Espagne?", "Madrid", arrayOf("Madrid", "Barcelone", "Valence", "Séville"), img = R.drawable.flag_spain)
-        var q5 = Question("Quelle est la capitale de l'Italie?", "Rome", arrayOf("Rome", "Milan", "Venise", "Turin"), img = R.drawable.flag_italy)
+        val q1 = Question(
+            "Quelle est la capitale du Canada?",
+            "Ottawa",
+            arrayOf("Ottawa", "Toronto", "Montreal", "Québec"),
+            img = R.drawable.flag_can
+        )
+        val q2 = Question(
+            "Quelle est la capitale de la France?",
+            "Paris",
+            arrayOf("Paris", "Lyon", "Marseille", "Bordeaux"),
+            img = R.drawable.flag_france
+        )
+        val q3 = Question(
+            "Quelle est la capitale de l'Allemagne?",
+            "Berlin",
+            arrayOf("Berlin", "Hambourg", "Munich", "Cologne"),
+            img = R.drawable.flag_ger
+        )
+        val q4 = Question(
+            "Quelle est la capitale de l'Espagne?",
+            "Madrid",
+            arrayOf("Madrid", "Barcelone", "Valence", "Séville"),
+            img = R.drawable.flag_spain
+        )
+        val q5 = Question(
+            "Quelle est la capitale de l'Italie?",
+            "Rome",
+            arrayOf("Rome", "Milan", "Venise", "Turin"),
+            img = R.drawable.flag_italy
+        )
 
-        var questions = arrayOf(q1, q2, q3, q4, q5)
-        return questions
+        return arrayOf(q1, q2, q3, q4, q5)
 
     }
 

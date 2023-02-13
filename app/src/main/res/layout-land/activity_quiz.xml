@@ -8,24 +8,23 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:contentDescription="@string/background_image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:contentDescription="@string/background_image"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bg_start" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="316dp"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="#EFEFEF"
+        android:layout_width="175dp"
+        android:layout_height="200dp"
         app:cardCornerRadius="7dp"
         app:contentPadding="7dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView3">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,15 +32,15 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/img_question"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                tools:src="@tools:sample/avatars" />
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
-
-            <ImageView
-                android:id="@+id/img_question"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:src="@tools:sample/avatars" />
 
             <Space
                 android:layout_width="match_parent"
@@ -54,6 +53,28 @@
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textColor="#000000" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="316dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="72dp"
+        app:cardBackgroundColor="#EFEFEF"
+        app:cardCornerRadius="7dp"
+        app:contentPadding="7dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <Space
                 android:layout_width="match_parent"
@@ -69,8 +90,8 @@
                     android:id="@+id/rdb_choix_un"
                     android:layout_width="275dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="3dp"
                     android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
                     android:background="@drawable/radio_button_selector"
                     android:button="@android:color/transparent"
                     android:elevation="4dp"
@@ -125,6 +146,13 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/txtNbQuestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textAlignment="center" />
 
             <ProgressBar
                 android:id="@+id/progress_quiz"
