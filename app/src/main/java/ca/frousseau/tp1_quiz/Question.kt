@@ -4,8 +4,10 @@ import android.graphics.drawable.Drawable
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
-class Question() : Parcelable {
+/**
+ * Représente une question
+ * */
+class Question() {
     var question: String = ""
     var reponse: String = ""
     var choix: Array<String> = arrayOf("", "", "", "")

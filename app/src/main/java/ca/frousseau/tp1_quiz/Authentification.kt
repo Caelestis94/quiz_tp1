@@ -20,8 +20,6 @@ class Authentification : AppCompatActivity(), View.OnClickListener {
 
         btn_start = findViewById(R.id.btn_start)
         txt_pseudo = findViewById(R.id.txt_pseudo)
-
-
         btn_start.setOnClickListener(this)
     }
 
@@ -30,11 +28,13 @@ class Authentification : AppCompatActivity(), View.OnClickListener {
         if (v != null) {
             if (v.id == R.id.btn_start) {
                 if (txt_pseudo.text.toString().isNotEmpty()) {
-                    val intent = Intent(this, Quiz::class.java)
+
                     val pref = PreferenceManager.getDefaultSharedPreferences(this)
                     val editor = pref.edit()
                     editor.putString("pseudo", txt_pseudo.text.toString())
                     editor.apply()
+
+                    val intent = Intent(this, Quiz::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, getString(R.string.pseudo_vide_erreur), Toast.LENGTH_SHORT).show()
